@@ -1,6 +1,4 @@
 ; SYSCALLS
-
-SYSCALL_FCNTL equ 72
 SYSCALL_IOCTL equ 16 
 
 ; COMMANDS
@@ -12,8 +10,6 @@ TCGETS equ 21505
 TCSETS equ 21506
 
 NR_READ equ 0
-
-O_NONBLOCK equ 2048
 
 ; standart buffers
 
@@ -29,8 +25,6 @@ char: db 0
 
 section .text
 
-;extern ungetc, stdin
-;global check_input_buffer
 global enable_raw_mode
 global disable_raw_mode
 
@@ -73,83 +67,3 @@ disable_raw_mode:
 	syscall 
 
 	ret
-
-	
-; NOT USED PROC
-; Firstly, clear input buffer -> return first fetched char 
-check_input_buffer:
-	push rbx 
-	push rcx
-	push rbp 
-	mov rbp, rsp
-	
-	mov bl, 0;
-	; set O_NONBLOCK
-	mov rax, SYSCALL_FCNTL
-	mov rdi, STDIN
-	mov rsi, F_GETFL
-	syscall
-	
-	mov [save_flags], rax
-
-	;cmp rax, 0
-	;jl .error
-	
-	or rax, O_NONBLOCK	
-	mov rdx, rax
-	mov rax, SYSCALL_FCNTL
-	mov rdi, STDIN	
-	mov rsi, F_SETFL
-	syscall
-
-.loop:
-	mov rax, NR_READ
-	mov rdi, STDIN
-	mov rsi, char 
-	mov rdx, 1
-	syscall
-	
-	cmp rax, 0
-	jle .done 
-	jmp .loop
-	;cmp bl, 0
-	;je .fetch_first
-	
-;.retf:
-;	cmp rax, 1
-;	je .loop
-
-;	jmp .ungets
-;.retu:
-;	cmp rax, 0
-;	jle .done
-
-;.fetch_first:
-;	cmp rax, 1
-;	je .ff	
-;	cmp rax, 0
-;	je .done
-
-;.ff:
-;	mov rcx, [char]		
-;	inc bl
-;	jmp .retf
-	
-;.ungets:
-;	mov rdi, rcx
-;	mov rsi, [stdin]
-;	call ungetc
-;	jmp .retu	
-
-.done: 
-	mov rax, SYSCALL_FCNTL
-	mov rdi, STDIN
-	mov rsi, F_SETFL
-	mov rdx, [save_flags]
-	syscall
-	
-	pop rbp
-	pop rcx
-	pop rbx
-	
-	ret	
