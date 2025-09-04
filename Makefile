@@ -8,9 +8,9 @@ EXECUTABLE=game
 	
 .PHONY: all clean
 
-all: $(SOURCES) ${OBJECTS} $(EXECUTABLE) 
+all: ${SOURCES} ${OBJECTS} ${EXECUTABLE}
 	
-$(EXECUTABLE): $(OBJECTS) 
+${EXECUTABLE}: ${OBJECTS}
 	$(CC) -no-pie $(OBJECTS) -o $@ -lncurses
 
 ${OBJECTS}: ${SOURCES}
