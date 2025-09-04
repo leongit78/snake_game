@@ -404,11 +404,10 @@ void game_start()
 		exit(0);
 	}
 	game_loop();
-	/*
+
 	if(gameover){
 		usleep(MICRO_MULTIPLIER * 200);
 		gameover_draw();
 	}
-	*/
 }
 
