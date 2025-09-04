@@ -11,7 +11,7 @@ EXECUTABLE=game
 all: ${SOURCES} ${OBJECTS} ${EXECUTABLE}
 	
 ${EXECUTABLE}: ${OBJECTS}
-	$(CC) -no-pie $(OBJECTS) -o $@ -lncurses
+	${CC} -no-pie ${OBJECTS} -o $@ -lncurses
 
 ${OBJECTS}: ${SOURCES}
 	${CC} ${CFLAGS} main.c -o main.o
