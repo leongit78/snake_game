@@ -2,7 +2,8 @@
 
 Now this game only works only on linux. 
 
-Dependencies: nasm, ncurses, any C compiler
+### Dependencies: 
+		nasm, ncurses, any C compiler
 
 ### Installation guide:
 
