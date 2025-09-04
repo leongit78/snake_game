@@ -1,6 +1,6 @@
 # TERMINAL SNAKE GAME
 
-Now this game only works only on linux. 
+Now this game works only on linux. 
 
 ### Dependencies: 
 		nasm, ncurses, any C compiler
